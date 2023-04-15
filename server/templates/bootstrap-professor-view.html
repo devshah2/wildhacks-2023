@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Professor View</title>
+    <link rel="stylesheet" href="../static/bootstrap.min.css">
+    <script src="script.js"></script>
+  </head>
+  <body>
+    <header>
+      <h1>Professor View</h1>
+    </header>
+    <main class="container">
+      <section class="question-box row" id="student-question">
+        <div class="col-12">
+          <h2>Student questions</h2>
+          {% for question in questions %}
+          <hr>
+          <article class="question row">
+            <div class="col-12">
+              <h3 class="question-title">{{ question.title }}</h3>
+              <p class="question-prompt">{{ question.prompt }}</p>
+            </div>
+          </article>
+          <hr>
+          {% endfor %}
+        </div>
+      </section>
+      <section class="question-box row" id="ai-question">
+        <h2>AI questions</h2>
+        {% for question in questions %}
+        <article class="question">
+          <h3 class="question-title">{{ question.title }}</h3>
+          <p class="question-prompt">{{ question.prompt }}</p>
+        </article>
+        {% endfor %}
+      </section>
+    </main>
+  </body>
+</html>
