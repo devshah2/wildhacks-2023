@@ -3,13 +3,14 @@ import threading
 
 class Question:
 
-    def __init__(self, uuid, data, votes=0, answer=None):
+    def __init__(self, uuid, data, votes=0, answer=None, author="Anonymous", is_student=False):
         self.uuid = uuid
         self.data = data
         self.votes = votes
         self.mut = threading.Lock()
         self.answer = answer
-        self.author = 'Anonymous'
+        self.author = author
+        self.is_student = is_student
 
     def votes_increment(self):
         self.mut.acquire()
