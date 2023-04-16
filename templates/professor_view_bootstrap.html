@@ -1,43 +1,84 @@
 <!DOCTYPE html>
+<html>
+<head>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>Professor View</title>
-    <link rel="stylesheet" href="../static/bootstrap.min.css">
-    <script src="script.js"></script>
-  </head>
-  <body>
-    <form method="post" action="/append_transcript">
-      <input type="text" name="addition" placeholder="transcript">
-      <input type="submit" name="append" value="append">
-    </form>
-    <header>
-      <h1>Professor View</h1>
-    </header>
-    <main class="container">
-      <section class="question-box row" id="student-question">
-        <div class="col-12">
-          <h2>Student questions</h2>
-          {% for question in questions %}
-          <hr>
-          <article class="question row">
-            <div class="col-12">
-              <h3 class="question">{{ question }}</h3>
-            </div>
-          </article>
-          <hr>
-          {% endfor %}
+<!-- Header with grey background, title, and blue button -->
+<header style="background-color: #f8f9fa; padding: 20px;">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <h1>Title</h1>
+      </div>
+      <div class="col-md-6 text-right">
+        <button class="btn btn-primary">Button</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Dropdowns section -->
+<section style="padding: 20px;">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <select class="form-control">
+          <option value="">Dropdown 1</option>
+          <option value="option1">Option 1</option>
+          <option value="option2">Option 2</option>
+          <option value="option3">Option 3</option>
+        </select>
+      </div>
+      <div class="col-md-3">
+        <select class="form-control">
+          <option value="">Dropdown 2</option>
+          <option value="option1">Option 1</option>
+          <option value="option2">Option 2</option>
+          <option value="option3">Option 3</option>
+        </select>
+      </div>
+      <div class="col-md-3">
+        <select class="form-control">
+          <option value="">Dropdown 3</option>
+          <option value="option1">Option 1</option>
+          <option value="option2">Option 2</option>
+          <option value="option3">Option 3</option>
+        </select>
+      </div>
+      <div class="col-md-3">
+        <select class="form-control">
+          <option value="">Dropdown 4</option>
+          <option value="option1">Option 1</option>
+          <option value="option2">Option 2</option>
+          <option value="option3">Option 3</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Card section -->
+<section style="background-color: #f8f9fa; padding: 20px;">
+  {% for question in questions %}
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">{{ question }}</h5>
+            <p class="card-text">This is a sample card that spans the entire width of the screen horizontally.</p>
+          </div>
         </div>
-      </section>
-      <section class="question-box row" id="ai-question">
-        <h2>AI questions</h2>
-        {% for question in questions %}
-        <article class="question">
-          <h3 class="question">{{ question }}</h3>
-        </article>
-        {% endfor %}
-      </section>
-    </main>
-  </body>
-</html>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</section>
+
+<!-- Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src
