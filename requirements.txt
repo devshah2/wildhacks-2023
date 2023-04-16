@@ -4,3 +4,4 @@ MarkupSafe==2.1.2
 openai==0.26.5
 sentence_transformers==2.2.2
 transformers==4.28.1
+SpeechRecognition==3.10.0
