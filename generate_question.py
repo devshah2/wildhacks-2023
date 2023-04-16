@@ -2,6 +2,7 @@ import tai3_5
 import question
 import cite_transcript_model
 import time
+import uuid as pyuuid
 
 def update_questions(transcript, shutdown, questions, temperature, class_lvl, updates=30):
     print("Starting generation thread!")
@@ -12,6 +13,7 @@ def update_questions(transcript, shutdown, questions, temperature, class_lvl, up
         if(generated!=""):
             answer = cite_transcript_model.cite_transcript(transcript.get_full(),generated)
             print(answer)
-            questions.append(question.Question(generated,0,answer))
+            uuid=pyuuid.uuid4()
+            questions[uuid]=question.Question(uuid,generated,0,answer)
     print("ending generation thread")
         
