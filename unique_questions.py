@@ -7,7 +7,11 @@ model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
 def safe_remove(questions, uuid1, uuid2):
     uuid = uuid1 if questions[uuid2].get_answer()!=None else uuid2
     if(uuid==uuid2 and questions[uuid1].get_answer()==None):
+        uuid = uuid1 if questions[uuid1].author!="AI" else uuid2
+    if(uuid==uuid2 and questions[uuid1].get_answer()==None):
         uuid = uuid1 if questions[uuid1].get_votes()<=questions[uuid2].get_votes() else uuid2
+    if(uuid==uuid1 and questions[uuid2].get_answer()==None):
+        uuid = uuid2 if questions[uuid2].author!="AI" else uuid1
     if uuid in questions:
         del questions[uuid]
 
