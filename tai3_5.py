@@ -13,15 +13,15 @@ def generate_personality(class_level=None):
     the content being taught. If there is no relevant question 
     can be asked, say '0' and nothing else."""
 
-def get_questions(class_lvl, prof_tscpt):
-  
+def get_questions(prof_tscpt,class_lvl=None, temperature="0.5"):
+  temperature=float(temperature)
   response = openai.ChatCompletion.create(
     model="gpt-3.5-turbo",
     messages = [
       {"role": "system", "content": generate_personality(class_lvl)},
       {"role": "user", "content": prof_tscpt}
       ],
-    temperature=0.5,
+    temperature=temperature,
     top_p=0
     )
   question = response.choices[0].message.content

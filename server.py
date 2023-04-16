@@ -5,6 +5,7 @@ from transcript import Transcript
 from question import Question
 import speech_to_text as spt
 import threading
+import markupsafe as mks
 
 from transcript_to_stream import send_transcript_thread
 
@@ -15,8 +16,20 @@ app.config['SESSION_PERMANENT'] = False
 # Kind of arbitrary but this is a safe number for testing
 WINDOW_SIZE = 4096
 transcript = Transcript(WINDOW_SIZE)
-questions: list[Question] = []
+questions: dict[pyuuid.UUID, Question] = {}
 prof_access_key = 'abcd'
+
+class SessionInfo:
+
+    def __init__(self, uuid):
+        self.uuid = uuid
+        self.is_prof = False
+        self.upvoted_questions = set()
+
+    def set_prof(self):
+        self.is_prof = True
+
+sinfo: dict[pyuuid.UUID, SessionInfo] = {}
 
 def generate_questions(transcript):
     return list(tai.get_questions(transcript))
@@ -24,7 +37,14 @@ def generate_questions(transcript):
 @app.route("/", methods=["GET"])
 def index():
     print(fk.session)
-    if 'prof' in fk.session and fk.session['prof']:
+    if not 'uuid' in fk.session:
+        uuid = pyuuid.uuid4()
+        fk.session['uuid'] = uuid
+        sinfo[uuid] = SessionInfo(uuid)
+    else:
+        uuid = fk.session['uuid']
+
+    if sinfo[uuid].is_prof:
         return fk.redirect(fk.url_for("professor"))
     else:
         return fk.redirect(fk.url_for("student"))
@@ -35,10 +55,25 @@ def access_key():
     print("Access key called")
     access_key = str(fk.request.form['access_key'])
     if access_key == prof_access_key:
-        fk.session['prof'] = True
+        sinfo[fk.session['uuid']].is_prof = True
         return fk.redirect(fk.url_for('professor'))
     else:
         fk.abort(403)
+
+@app.route("/upvote/<question_uuid>", methods=["POST"])
+def upvote(question_uuid):
+    quuid = pyuuid.UUID(question_uuid)
+    if not quuid in questions.keys():
+        fk.abort(404)
+    question = questions[quuid]
+    if question in sinfo[fk.session['uuid']].upvoted_questions:
+        question.votes_decrement()
+        sinfo[fk.session['uuid']].upvoted_questions.remove(question)
+    else:
+        question.votes_increment()
+        sinfo[fk.session['uuid']].upvoted_questions.add(question)
+
+    return fk.redirect(fk.url_for("student"))
 
 @app.route("/professor")
 def professor():
@@ -57,7 +92,8 @@ def student():
 @app.route("/student", methods=["POST"])
 def student_post_question():
     question = fk.request.form['question']
-    questions.append(Question(question))
+    quuid = pyuuid.uuid4()
+    questions[quuid] = Question(quuid, question)
     return fk.redirect(fk.url_for("student"))
 
 @app.errorhandler(500)

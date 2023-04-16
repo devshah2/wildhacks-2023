@@ -32,6 +32,7 @@
 	  </div>
   </section>
   <div class="container mt-5">
+<<<<<<< HEAD
 	  <div class="row">
 	    <div class="col-md-6">
 	      <div class="card">
@@ -77,6 +78,54 @@
 	  </div>
 	</div>
 
+=======
+      <div class="col-md-6 offset-md-3">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="mb-0">Ask a Question</h4>
+          </div>
+          <div class="card-body">
+            {% if questions %}
+              <div class="alert alert-info">
+                {% for question in questions.values() %}
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center">
+                      <i class="far fa-thumbs-up mr-2"></i>
+                      <p>{{ question.data }}</p>
+                    </div>
+                    <form action="upvote/{{ question.uuid }}", method="post">
+                    <input type="submit" class="btn btn-success">Upvote <span class="badge badge-light ml-2">{{ question.votes }}</span></button>
+                    </form>
+                  </div>
+                {% endfor %}
+              </div>
+            {% endif %}
+            <form method="POST">
+              <div class="form-group">
+                <label for="question">Question:</label>
+                <input type="text" class="form-control" id="question" name="question" placeholder="Enter your question here">
+              </div>
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <h4 class="mb-0"> </h4>
+      <div class="row">
+      <div class="col-md-6 offset-md-3">
+          <div class="card-header">
+            <h4 class="mb-0">Live Transcript</h4>
+          </div>
+          <div class="card-body">
+            {% if transcript %}
+            <div id="transcript">{{ transcript }}</div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+>>>>>>> 5f494f0f649180cb148a93f60f585a5796c846cc
   
   <!-- Include the Bootstrap JavaScript file at the bottom of the <body> -->
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
