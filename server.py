@@ -92,7 +92,7 @@ def student():
 def student_post_question():
     question = fk.request.form['question']
     quuid = pyuuid.uuid4()
-    questions[quuid] = Question(quuid, question, votes=0, is_student=True)
+    questions[quuid] = Question(quuid, question, votes=0, is_student=True, author="Student")
     return fk.redirect(fk.url_for("student"))
 
 @app.errorhandler(500)

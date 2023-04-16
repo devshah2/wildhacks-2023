@@ -1,8 +1,7 @@
 import os
 import openai
 
-openai.organization = "org-AanZ8UEwwQn4x89YMCu6n9dr"
-openai.api_key = "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"
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
 def generate_personality(class_level=None):
   if class_level != None:

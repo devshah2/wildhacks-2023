@@ -3,7 +3,7 @@ import threading
 
 class Question:
 
-    def __init__(self, uuid, data, votes=0, answer=None, author="Anonymous", is_student=False):
+    def __init__(self, uuid, data, votes=0, answer=None, author="AI", is_student=False):
         self.uuid = uuid
         self.data = data
         self.votes = votes

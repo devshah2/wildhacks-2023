@@ -71,7 +71,7 @@
           <div class="card-body">
               <h5 class="card-title">{{ question.data }}</h5>
               <p class="card-text">Asked by {{ question.author }}</p>
-              <p class="card-text">AI Answer: "{{ question.answer }}"</p>
+              <p class="card-text">AI Citation: "{{ question.answer[0] }}<b>{{ question.answer[1] }}</b>{{ question.answer[2] }}"</p>
               <div class="text-right">
                 <span class="badge badge-primary" style="vertical-align: middle;">{{ question.votes }} Upvotes</span>
               </div>
