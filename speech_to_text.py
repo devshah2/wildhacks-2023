@@ -26,7 +26,7 @@ def speech_recog_thread(transcript, shutdown):
             print("Consumer acquired!")
             audio = recognizer_queue.pop(0)
             text = recognizer.recognize_google(audio)
-            transcript.append(text + ' ')
+            transcript.append(text + '. ')
             print(transcript.get_full())
         except sr.UnknownValueError:
             print("Sorry, I didn't catch that. Could you please repeat?")
