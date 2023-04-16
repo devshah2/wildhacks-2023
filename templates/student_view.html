@@ -20,25 +20,26 @@
 		<div class="container">
 		  <div class="row">
 			<div class="col-md-6">
-			  <h1>TAi</h1>
+			  <h1>TAi - Student</h1>
 			</div>
+                        {% if is_prof %}
 			<div class="col-md-6 text-right">
 			  <form action="/professor">
 				<button class="btn btn-primary" type="submit">Professor View</button>
 			 </form>
 			</div>
+                        {% else %}
+
+			<div class="col-md-6 text-right">
+                         <form method="post", action="/access_key">
+				<input type="text", name="access_key", placeholder="access key">
+				<input type="submit", value="Submit">
+			 </form>
+                        </div>
+                        {% endif %}
 		  </div>
 		</div>
 	  </header>
-  <section style="padding: 10px;">
-	  <div class="container">
-	    <div class="row">
-			<form method="post", action="/access_key">
-				<input type="text", name="access_key", value="">
-				<input type="submit", value="Submit">
-			  </form>
-	    </div>
-	  </div>
   </section>
   <div class="container mt-5">
 	  <div class="row">

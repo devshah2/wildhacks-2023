@@ -1,19 +1,20 @@
+import os
+import sys
 from string import ascii_lowercase
 import random
 import flask as fk
 import flask_sock as fks
 import uuid as pyuuid
-import tai
 from transcript import Transcript
 from question import Question
 import speech_to_text as spt
 import threading
-import markupsafe as mks
 from generate_question import update_questions
 from answer_questions_updater import answer_questions
 from filter_questions import erase_questions
 from gptconfig import Gptconfig
 from transcript_to_stream import send_transcript_thread
+import argparse
 
 app = fk.Flask(__name__)
 app.config['SECRET_KEY'] = str(pyuuid.uuid4().hex)
@@ -116,7 +117,8 @@ def student():
                               transcript=transcript.get_full(),
                               questions=questions,
                               constant_refresh=False,
-                              websockets=True)
+                              websockets=True,
+                              is_prof=sinfo[fk.session['uuid']].is_prof)
 
 @app.route("/student", methods=["POST"])
 def student_post_question():
@@ -156,15 +158,24 @@ def errorhandler_403(error):
 shutdown = threading.Event()
 def main():
 
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--voice', action=argparse.BooleanOptionalAction)
+    parser.add_argument('--transcript_file', default="example_lecture.txt")
+    parser.add_argument('--addr', default="0.0.0.0")
+
+    args = parser.parse_args()
+
     shutdown.clear()
 
     # Start threads here
-    speech_to_text_enabled = False
+    speech_to_text_enabled = bool(args.voice)
     if speech_to_text_enabled:
+        print("Speech to text enabled!")
         spt_thread = threading.Thread(target=spt.speech_recog_thread, args=[transcript, shutdown])
         spt_thread.start()
     else:
-        st_thread = threading.Thread(target=send_transcript_thread, args=[transcript, shutdown])
+        print("Transcript File: ", args.transcript_file)
+        st_thread = threading.Thread(target=send_transcript_thread, args=[transcript, shutdown, args.transcript_file])
         st_thread.start()
 
     gen_thread = threading.Thread(target=update_questions, args=[transcript, shutdown, questions, config])

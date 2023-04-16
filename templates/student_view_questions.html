@@ -6,11 +6,13 @@
       <i class="far fa-thumbs-up mr-2"></i>
       <p>{{ question.data }}</p>
     </div>
+    <div class="d-flex align-items-center">
     <form action="/upvote/{{ question.uuid }}", method="POST">
       <input type="submit" class="btn btn-success", value="Upvote">
       <span class="badge badge-light ml-2">
         {{ question.votes }}
       </span>
+    </div>
     </form>
   </div>
   {% endfor %}

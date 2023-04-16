@@ -1,4 +1,5 @@
 from sentence_transformers import SentenceTransformer, util
+
 model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
 
 # rearrange by answer exists
