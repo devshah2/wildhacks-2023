@@ -18,7 +18,7 @@ def speech_recog_thread(transcript, shutdown):
     print("Starting speech_recog thread!")
     recognizer.listen
     source = sr.Microphone()
-    end_listener = recognizer.listen_in_background(source,callback=audio_listener_callback,phrase_time_limit=60)
+    end_listener = recognizer.listen_in_background(source,callback=audio_listener_callback,phrase_time_limit=15)
     while not shutdown.is_set():
         try:
             print("Waiting on audio queue semaphore")

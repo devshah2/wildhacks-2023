@@ -158,12 +158,17 @@ def errorhandler_403(error):
 shutdown = threading.Event()
 def main():
 
+    global prof_access_key
+
     parser = argparse.ArgumentParser()
     parser.add_argument('--voice', action=argparse.BooleanOptionalAction)
     parser.add_argument('--transcript_file', default="example_lecture.txt")
     parser.add_argument('--addr', default="0.0.0.0")
+    parser.add_argument('--key', default=prof_access_key)
 
     args = parser.parse_args()
+
+    prof_access_key = args.key
 
     shutdown.clear()
 
