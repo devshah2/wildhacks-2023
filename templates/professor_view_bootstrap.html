@@ -1,53 +1,13 @@
 <!DOCTYPE html>
-<style>
-  /* Reset default margin and padding */
-body, h1 {
-  margin: 0;
-  padding: 0;
-}
 
-/* Header styles */
-.header {
-  background-color: #D9D9D9;
-  color: #000000;
-  padding: 20px;
-}
-
-.container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.title {
-  font-size: 24px;
-}
-
-.btn {
-  background-color: #3675D2;
-  color: #000000;
-  padding: 10px 20px;
-  border: none;
-  cursor: pointer;
-  font-size: 18px;
-  border-radius: 16px;
-}
-
-</style>
 <html lang="en">
   <head>
     <meta charset="utf-8">
     <title>Professor View</title>
+    <link rel="stylesheet" href="../static/bootstrap.min.css">
     <script src="script.js"></script>
   </head>
   <body>
-    <header class="header">
-      <div class="container">
-        <h1 class="title">TAi</h1>
-        
-        <button class="btn">Student View</button>
-      </div>
-    </header>
     <form method="post" action="/append_transcript">
       <input type="text" name="addition" placeholder="transcript">
       <input type="submit" name="append" value="append">
