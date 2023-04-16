@@ -1,43 +1,134 @@
 <!DOCTYPE html>
+<html>
+<head>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>Professor View</title>
-    <link rel="stylesheet" href="../static/bootstrap.min.css">
-    <script src="script.js"></script>
-  </head>
-  <body>
-    <form method="post" action="/append_transcript">
-      <input type="text" name="addition" placeholder="transcript">
-      <input type="submit" name="append" value="append">
-    </form>
-    <header>
-      <h1>Professor View</h1>
-    </header>
-    <main class="container">
-      <section class="question-box row" id="student-question">
-        <div class="col-12">
-          <h2>Student questions</h2>
-          {% for question in questions %}
-          <hr>
-          <article class="question row">
-            <div class="col-12">
-              <h3 class="question">{{ question }}</h3>
-            </div>
-          </article>
-          <hr>
-          {% endfor %}
+<!-- Header with grey background, title, and blue button -->
+<header style="background-color: #f8f9fa; padding: 20px;">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <h1>TAi</h1>
+      </div>
+      <div class="col-md-6 text-right">
+        <button class="btn btn-primary">Student View</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Dropdowns section -->
+<section style="padding: 20px;">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <label for="dropdown1">Class Level</label>
+        <select class="form-control" id="class">
+          <option value="undergraduate">Undergraduate</option>
+          <option value="graduate">Graduate</option>
+          <option value="high school">High School</option>
+        </select>
+      </div>
+      <div class="col-md-3">
+        <label for="dropdown2" id="generation">Generation Speed</label>
+        <select class="form-control">
+          <option value="30">30 seconds</option>
+          <option value="60">60 seconds</option>
+          <option value="90">90 seconds</option>
+          <option value="180">180 seconds</option>
+        </select>
+      </div>
+      <div class="col-md-3" id="creativity">
+        <label for="dropdown3">Question Creativity</label>
+        <select class="form-control">
+          <option value="0">Elaborative</option>
+          <option value="0.5">Exploratory</option>
+          <option value="1">Very Creative</option>
+        </select>
+      </div>
+      <div class="col-md-3" id="sort">
+        <label for="dropdown4">Sort by</label>
+        <select class="form-control">
+          <option value="Upvotes">Upvotes</option>
+          <option value="Recent">Recent</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Card section -->
+<section style="background-color: #f8f9fa; padding: 20px;">
+  {% for question in questions %}
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-body">
+              <h5 class="card-title">{{ question }}</h5>
+              <p class="card-text">Asked by {{ author }}</p>
+              <div class="text-right">
+                <span class="badge badge-primary" style="vertical-align: middle;">3 Upvotes</span>
+              </div>
+            </div>        
         </div>
-      </section>
-      <section class="question-box row" id="ai-question">
-        <h2>AI questions</h2>
-        {% for question in questions %}
-        <article class="question">
-          <h3 class="question">{{ question }}</h3>
-        </article>
-        {% endfor %}
-      </section>
-    </main>
-  </body>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</section>
+
+<!-- Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+  // Get references to the dropdowns
+  var dropdown1 = document.getElementById('class');
+  var dropdown2 = document.getElementById('generation');
+  var dropdown3 = document.getElementById('creativity');
+  var dropdown4 = document.getElementById('sort');
+
+  // Add event listeners for dropdown change events
+  dropdown1.addEventListener('change', sendPostRequest);
+  dropdown2.addEventListener('change', sendPostRequest);
+  dropdown3.addEventListener('change', sendPostRequest);
+  dropdown4.addEventListener('change', sendPostRequest);
+
+  // Function to send POST request
+  function sendPostRequest() {
+    // Get selected values from dropdowns
+    var selectedValue1 = dropdown1.value;
+    var selectedValue2 = dropdown2.value;
+    var selectedValue3 = dropdown3.value;
+    var selectedValue4 = dropdown4.value;
+
+    // Create data object to send in POST request
+    var data = {
+      class: selectedValue1,
+      generation: selectedValue2,
+      creativity: selectedValue3,
+      sort: selectedValue4
+    };
+
+    // Use AJAX to make POST request
+    $.ajax({
+      url: '/flask-page-url',  // Replace with the URL of your Flask page
+      type: 'POST',
+      data: JSON.stringify(data),
+      contentType: 'application/json',
+      success: function(response) {
+        // Handle success response here
+      },
+      error: function(error) {
+        // Handle error here
+      }
+    });
+  }
+</script>
+
+</body>
 </html>
