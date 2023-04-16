@@ -20,3 +20,21 @@ class Question:
         self.mut.acquire()
         self.votes -= 1
         self.mut.release()
+
+    def get_data(self):
+        self.mut.acquire()
+        data = self.data
+        self.mut.release()
+        return data
+    
+    def get_uuid(self):
+        self.mut.acquire()
+        uuid = self.uuid
+        self.mut.release()
+        return uuid
+
+    def get_answer(self):
+        self.mut.acquire()
+        answer = self.answer
+        self.mut.release()
+        return answer
