@@ -51,9 +51,9 @@
                   <div class="d-flex justify-content-between align-items-center">
                     <div class="d-flex align-items-center">
                       <i class="far fa-thumbs-up mr-2"></i>
-                      <p>{{ question }}</p>
+                      <p>{{ question.data }}</p>
                     </div>
-                    <button type="button" class="btn btn-success">Upvote <span class="badge badge-light ml-2">0</span></button>
+                    <button type="button" class="btn btn-success">Upvote <span class="badge badge-light ml-2">{{ question.votes }}</span></button>
                   </div>
                 {% endfor %}
               </div>
@@ -75,7 +75,7 @@
             <h4 class="mb-0">Live Transcript</h4>
           </div>
           <div class="card-body">
-            <div id="transcript">{{ live_transcript }}</div>
+            <div id="transcript">{{ transcript.full }}</div>
           </div>
         </div>
       </div>

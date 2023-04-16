@@ -2,6 +2,7 @@ import flask as fk
 import uuid as pyuuid
 import tai
 from transcript import Transcript
+from question import Question
 import speech_to_text as spt
 import threading
 
@@ -12,6 +13,7 @@ app.config['SESSION_PERMANENT'] = False
 # Kind of arbitrary but this is a safe number for testing
 WINDOW_SIZE = 4096
 transcript = Transcript(WINDOW_SIZE)
+questions: list[Question] = []
 prof_access_key = 'abcd'
 
 def generate_questions(transcript):
@@ -41,12 +43,20 @@ def professor():
     if not 'prof' in fk.session:
         fk.abort(403)
     return fk.render_template("professor_view_bootstrap.html",
-                              transcript=transcript.get_full())
+                              transcript=transcript.get_full(),
+                              questions=questions)
 
-@app.route("/student")
+@app.route("/student", methods=["GET"])
 def student():
-    return fk.render_template("student_view_bootstrap.html",
-                              transcript=transcript.get_full())
+    return fk.render_template("student_view.html",
+                              transcript=transcript.get_full(),
+                              questions=questions)
+
+@app.route("/student", methods=["POST"])
+def student_post_question():
+    question = fk.request.form['question']
+    questions.append(Question(question))
+    return fk.redirect(fk.url_for("student"))
 
 @app.errorhandler(500)
 def errorhandler_500(error):
