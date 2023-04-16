@@ -50,6 +50,7 @@ def append_transcript():
     addition = fk.request.form['addition']
     sdata[uuid].transcript += addition
     sdata[uuid].transcript_changed = True
+    print("Transcript Changed: ", sdata[uuid].transcript)
     return fk.redirect(fk.url_for('session'))
 
 @app.errorhandler(500)
