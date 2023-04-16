@@ -5,7 +5,7 @@
 {% endif %}
 
 <head>
-  <title>My Page</title>
+  <title>Student View</title>
   <!-- Include the Bootstrap CSS file -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   <style>
@@ -16,20 +16,27 @@
   </style>
 </head>
 <body>
-  <form method="post", action="/access_key">
-    <input type="text", name="access_key", value="">
-    <input type="submit", value="Submit">
-  </form>
-  <section style="padding: 20px;">
+	<header style="background-color: #f8f9fa; padding: 20px;">
+		<div class="container">
+		  <div class="row">
+			<div class="col-md-6">
+			  <h1>TAi</h1>
+			</div>
+			<div class="col-md-6 text-right">
+			  <form action="/professor">
+				<button class="btn btn-primary" type="submit">Professor View</button>
+			 </form>
+			</div>
+		  </div>
+		</div>
+	  </header>
+  <section style="padding: 10px;">
 	  <div class="container">
 	    <div class="row">
-	      <div class="col-md-3 ml-auto d-flex justify-content-end">
-	        <label for="dropdown1"></label>
-	        <select class="form-control" id="class">
-	          <option value="unanswered">Unanswered</option>
-	          <option value="answered">Answered</option>
-	        </select>
-	      </div>
+			<form method="post", action="/access_key">
+				<input type="text", name="access_key", value="">
+				<input type="submit", value="Submit">
+			  </form>
 	    </div>
 	  </div>
   </section>
