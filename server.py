@@ -121,10 +121,10 @@ def main():
         st_thread = threading.Thread(target=send_transcript_thread, args=[transcript, shutdown])
         st_thread.start()
 
-    gen_thread = threading.Thread(target=update_questions, args=[transcript, shutdown, questions, 0.5, "undergrad", 10])
+    gen_thread = threading.Thread(target=update_questions, args=[transcript, shutdown, questions, 0.5, "undergrad", 30])
     gen_thread.start()
 
-    erase_thread = threading.Thread(target=erase_questions, args=[questions, shutdown, 10])
+    erase_thread = threading.Thread(target=erase_questions, args=[questions, shutdown, 5])
     erase_thread.start()    
     # 
     app.run(host='0.0.0.0',port=5000)
