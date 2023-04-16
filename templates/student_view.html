@@ -72,7 +72,9 @@
             <h4 class="mb-0">Live Transcript</h4>
           </div>
           <div class="card-body">
-            <div id="transcript">{{ transcript.full }}</div>
+            {% if transcript %}
+            <div id="transcript">{{ transcript }}</div>
+            {% endif %}
           </div>
         </div>
       </div>

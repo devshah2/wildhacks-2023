@@ -6,6 +6,8 @@ from question import Question
 import speech_to_text as spt
 import threading
 
+from transcript_to_stream import send_transcript_thread
+
 app = fk.Flask(__name__)
 app.config['SECRET_KEY'] = str(pyuuid.uuid4().hex)
 app.config['SESSION_PERMANENT'] = False
@@ -80,6 +82,9 @@ def main():
     if speech_to_text_enabled:
         spt_thread = threading.Thread(target=spt.speech_recog_thread, args=[transcript, shutdown])
         spt_thread.start()
+    else:
+        st_thread = threading.Thread(target=send_transcript_thread, args=[transcript, shutdown])
+        st_thread.start()
 
     # 
     app.run(host='0.0.0.0',port=5000)
@@ -91,6 +96,10 @@ def main():
         print("joining spt_thread")
         spt_thread.join()
         print("spt_thread joined!")
+    else:
+        print("joining st_thread")
+        st_thread.join()
+        print("st_thread joined!")
 
 
 if __name__ == "__main__":
