@@ -22,7 +22,7 @@ app.config['SESSION_PERMANENT'] = False
 sock = fks.Sock(app)
 
 # Kind of arbitrary but this is a safe number for testing
-WINDOW_SIZE = 500
+WINDOW_SIZE = 4096
 transcript = Transcript(WINDOW_SIZE)
 questions: dict[pyuuid.UUID, Question] = {}
 config = Gptconfig("0.5", "undergraduate", 30)
