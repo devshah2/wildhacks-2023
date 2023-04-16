@@ -23,7 +23,7 @@ def index():
         return fk.redirect(fk.url_for("student"))
 
 
-@app.route("access_key", methods=["POST"])
+@app.route("/access_key", methods=["POST"])
 def access_key():
     access_key = str(fk.request.form['access_key'])
     if access_key == prof_access_key:
@@ -32,15 +32,15 @@ def access_key():
     else:
         return fk.redirect(fk.url_for('its_just_a_prank_bro'))
 
-@app.route("professor")
+@app.route("/professor")
 def professor():
     return fk.render_template("professor_view_bootstrap.html")
 
-@app.route("student")
+@app.route("/student")
 def student():
     return fk.render_template("student_view_bootstrap.html")
 
-@app.route("its_just_a_prank_bro", methods=["GET"])
+@app.route("/its_just_a_prank_bro", methods=["GET"])
 def its_just_a_prank_bro():
     return fk.render_template("scary_page.html")
 
