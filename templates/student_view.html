@@ -1,70 +1,87 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>My Page</title>
-	<!-- Include the Bootstrap CSS file -->
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <title>My Page</title>
+  <!-- Include the Bootstrap CSS file -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    #transcript {
+      height: 200px;
+      overflow-y: scroll;
+    }
+  </style>
 </head>
 <body>
 
-	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-		<a class="navbar-brand" href="#">My Page</a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse" id="navbarNavDropdown">
-			<ul class="navbar-nav ml-auto">
-				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						Filter
-					</a>
-					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-						<a class="dropdown-item" href="#">Unanswered</a>
-						<a class="dropdown-item" href="#">Answered</a>
-					</div>
-				</li>
-			</ul>
-		</div>
-	</nav>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">My Page</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
 
-	<div class="container mt-5">
-		<div class="row">
-			<div class="col-md-6 offset-md-3">
-				<div class="card">
-					<div class="card-header">
-						<h4 class="mb-0">Ask a Question</h4>
-					</div>
-					<div class="card-body">
-						{% if questions %}
-							<div class="alert alert-info">
-								{% for question in questions %}
-									<div class="d-flex justify-content-between align-items-center">
-										<div class="d-flex align-items-center">
-											<i class="far fa-thumbs-up mr-2"></i>
-											<p>{{ question }}</p>
-										</div>
-										<button type="button" class="btn btn-success">Upvote <span class="badge badge-light ml-2">0</span></button>
-									</div>
-								{% endfor %}
-							</div>
-						{% endif %}
-						<form method="POST">
-							<div class="form-group">
-								<label for="question">Question:</label>
-								<input type="text" class="form-control" id="question" name="question" placeholder="Enter your question here">
-							</div>
-							<button type="submit" class="btn btn-primary">Submit</button>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
 
-	<!-- Include the Bootstrap JavaScript file at the bottom of the <body> -->
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-	<!-- Include Font Awesome icons -->
-	<script src="https://kit.fontawesome.com/1c43c1fcd7.js" crossorigin="anonymous"></script>
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Filter
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="#">Unanswered</a>
+            <a class="dropdown-item" href="#">Answered</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container mt-5">
+      <div class="col-md-6 offset-md-3">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="mb-0">Ask a Question</h4>
+          </div>
+          <div class="card-body">
+            {% if questions %}
+              <div class="alert alert-info">
+                {% for question in questions %}
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center">
+                      <i class="far fa-thumbs-up mr-2"></i>
+                      <p>{{ question }}</p>
+                    </div>
+                    <button type="button" class="btn btn-success">Upvote <span class="badge badge-light ml-2">0</span></button>
+                  </div>
+                {% endfor %}
+              </div>
+            {% endif %}
+            <form method="POST">
+              <div class="form-group">
+                <label for="question">Question:</label>
+                <input type="text" class="form-control" id="question" name="question" placeholder="Enter your question here">
+              </div>
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <h4 class="mb-0"> </h4>
+      <div class="row">
+      <div class="col-md-6 offset-md-3">
+          <div class="card-header">
+            <h4 class="mb-0">Live Transcript</h4>
+          </div>
+          <div class="card-body">
+            <div id="transcript">{{ live_transcript }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Include the Bootstrap JavaScript file at the bottom of the <body> -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <!-- Include Font Awesome icons -->
+  <script src="https://kit.fontawesome.com/1c43c1fcd7.js" crossorigin="anonymous"></script>
 </body>
 </html>
-
