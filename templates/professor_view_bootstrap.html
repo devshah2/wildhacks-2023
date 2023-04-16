@@ -63,16 +63,16 @@
 
 <!-- Card section -->
 <section style="background-color: #f8f9fa; padding: 20px;">
-  {% for question in questions %}
+  {% for question in questions.values() %}
   <div class="container">
     <div class="row">
       <div class="col-md-12">
         <div class="card">
           <div class="card-body">
-              <h5 class="card-title">{{ question }}</h5>
-              <p class="card-text">Asked by {{ author }}</p>
+              <h5 class="card-title">{{ question.data }}</h5>
+              <p class="card-text">Asked by {{ question.author }}</p>
               <div class="text-right">
-                <span class="badge badge-primary" style="vertical-align: middle;">3 Upvotes</span>
+                <span class="badge badge-primary" style="vertical-align: middle;">{{ question.votes }} Upvotes</span>
               </div>
             </div>        
         </div>

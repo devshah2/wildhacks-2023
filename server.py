@@ -75,7 +75,7 @@ def upvote(question_uuid):
 
 @app.route("/professor")
 def professor():
-    if not 'prof' in fk.session:
+    if not sinfo[fk.session['uuid']].is_prof:
         fk.abort(403)
     return fk.render_template("professor_view_bootstrap.html",
                               transcript=transcript.get_full(),

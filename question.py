@@ -9,6 +9,7 @@ class Question:
         self.votes = votes
         self.mut = threading.Lock()
         self.answer = answer
+        self.author = 'Anonymous'
 
     def votes_increment(self):
         self.mut.acquire()
