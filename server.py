@@ -37,6 +37,8 @@ def access_key():
 
 @app.route("/professor")
 def professor():
+    if not 'prof' in fk.session:
+        fk.abort(403)
     return fk.render_template("professor_view_bootstrap.html")
 
 @app.route("/student")
