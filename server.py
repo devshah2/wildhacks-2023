@@ -1,4 +1,6 @@
+import time
 import flask as fk
+import flask_sock as fks
 import uuid as pyuuid
 import tai
 from transcript import Transcript
@@ -14,6 +16,8 @@ from transcript_to_stream import send_transcript_thread
 app = fk.Flask(__name__)
 app.config['SECRET_KEY'] = str(pyuuid.uuid4().hex)
 app.config['SESSION_PERMANENT'] = False
+
+sock = fks.Sock(app)
 
 # Kind of arbitrary but this is a safe number for testing
 WINDOW_SIZE = 4096
@@ -80,13 +84,17 @@ def professor():
         fk.abort(403)
     return fk.render_template("professor_view_bootstrap.html",
                               transcript=transcript.get_full(),
-                              questions=questions)
+                              questions=questions,
+                              constant_refresh=True,
+                              websockets=False)
 
 @app.route("/student", methods=["GET"])
 def student():
     return fk.render_template("student_view.html",
                               transcript=transcript.get_full(),
-                              questions=questions)
+                              questions=questions,
+                              constant_refresh=False,
+                              websockets=True)
 
 @app.route("/student", methods=["POST"])
 def student_post_question():
@@ -94,6 +102,12 @@ def student_post_question():
     quuid = pyuuid.uuid4()
     questions[quuid] = Question(quuid, question, votes=0, is_student=True, author="Student")
     return fk.redirect(fk.url_for("student"))
+
+@sock.route("/transcript")
+def send_transcript(sock):
+    while not shutdown.is_set():
+        sock.send(transcript.get_full())
+        time.sleep(3000)
 
 @app.errorhandler(500)
 def errorhandler_500(error):
@@ -107,9 +121,9 @@ def errorhandler_404(error):
 def errorhandler_403(error):
     return fk.render_template("403.html"), 403
 
+shutdown = threading.Event()
 def main():
 
-    shutdown = threading.Event()
     shutdown.clear()
 
     # Start threads here

@@ -2,6 +2,7 @@ torch
 transformers
 openai
 flask
+flask-sock
 sentence-transformers
 SpeechRecognition
 PyAudio

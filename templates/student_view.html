@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
+{% if constant_refresh == True %}
 <meta http-equiv="refresh" content="5" />
+{% endif %}
 
 <head>
   <title>My Page</title>
@@ -39,10 +41,14 @@
 	          <h4 class="mb-0">Live Transcript</h4>
 	        </div>
 	        <div class="card-body">
-	          {% if transcript %}
-	          <div id="transcript">{{ transcript }}</div>
-	          {% endif %}
-	        </div>
+                  <div id="transcript">
+                  {% if constant_refresh == True %}
+	            {% if transcript %}
+                      {{ transcript }}
+	            {% endif %}
+                  {% endif %}
+                  </div>
+      	        </div>
 	      </div>
 	    </div>
 	    <div class="col-md-6">
@@ -79,7 +85,17 @@
 	  </div>
 	</div>
 
-  
+  {% if websockets == True %}
+  <script>
+
+    const socket = new WebSocket("ws://" + location.host + "/transcript");
+    socket.addEventListener('message', ev => {
+        document.getElementById('transcript').innerHTML = ev.data;
+    });
+
+  </script>
+  {% endif %}
+
   <!-- Include the Bootstrap JavaScript file at the bottom of the <body> -->
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
   <!-- Include Font Awesome icons -->
