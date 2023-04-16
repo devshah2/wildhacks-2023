@@ -19,8 +19,7 @@
           <hr>
           <article class="question row">
             <div class="col-12">
-              <h3 class="question-title">{{ question.title }}</h3>
-              <p class="question-prompt">{{ question.prompt }}</p>
+              <h3 class="question">{{ question }}</h3>
             </div>
           </article>
           <hr>
@@ -31,8 +30,7 @@
         <h2>AI questions</h2>
         {% for question in questions %}
         <article class="question">
-          <h3 class="question-title">{{ question.title }}</h3>
-          <p class="question-prompt">{{ question.prompt }}</p>
+          <h3 class="question">{{ question }}</h3>
         </article>
         {% endfor %}
       </section>
