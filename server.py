@@ -85,9 +85,11 @@ def upvote(question_uuid):
 def professor():
     if not sinfo[fk.session['uuid']].is_prof:
         fk.abort(403)
+    all_questions = list(questions.values())
+    all_questions.sort(key=lambda q: q.get_votes(), reverse=True)
     return fk.render_template("professor_view_bootstrap.html",
                               transcript=transcript.get_full(),
-                              questions=questions,
+                              questions=all_questions,
                               constant_refresh=True,
                               websockets=False,
                               class_lvl=config.get_class_lvl(),
