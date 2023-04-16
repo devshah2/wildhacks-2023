@@ -2,6 +2,8 @@ import flask as fk
 import uuid as pyuuid
 import tai
 from transcript import Transcript
+import speech_to_text as spt
+import threading
 
 app = fk.Flask(__name__)
 app.config['SECRET_KEY'] = str(pyuuid.uuid4().hex)
@@ -9,8 +11,7 @@ app.config['SESSION_PERMANENT'] = False
 
 # Kind of arbitrary but this is a safe number for testing
 WINDOW_SIZE = 4096
-
-unanswered_questions = []
+transcript = Transcript(WINDOW_SIZE)
 prof_access_key = 'abcd'
 
 def generate_questions(transcript):
@@ -39,11 +40,13 @@ def access_key():
 def professor():
     if not 'prof' in fk.session:
         fk.abort(403)
-    return fk.render_template("professor_view_bootstrap.html")
+    return fk.render_template("professor_view_bootstrap.html",
+                              transcript=transcript.get_full())
 
 @app.route("/student")
 def student():
-    return fk.render_template("student_view_bootstrap.html")
+    return fk.render_template("student_view_bootstrap.html",
+                              transcript=transcript.get_full())
 
 @app.errorhandler(500)
 def errorhandler_500(error):
@@ -58,11 +61,26 @@ def errorhandler_403(error):
     return fk.render_template("403.html"), 403
 
 def main():
+
+    shutdown = threading.Event()
+    shutdown.clear()
+
     # Start threads here
-    
+    speech_to_text_enabled = False
+    if speech_to_text_enabled:
+        spt_thread = threading.Thread(target=spt.speech_recog_thread, args=[transcript, shutdown])
+        spt_thread.start()
 
     # 
     app.run(host='0.0.0.0',port=5000)
+
+    print("Shutting down...")
+    shutdown.set()
+
+    if speech_to_text_enabled:
+        print("joining spt_thread")
+        spt_thread.join()
+        print("spt_thread joined!")
 
 
 if __name__ == "__main__":
