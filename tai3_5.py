@@ -3,9 +3,12 @@ import openai
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
-def generate_personality(class_level):
-  return f"""You are a class assistant for a {class_level} level 
-    class. Given a transcript from 
+def generate_personality(class_level=None):
+  if class_level != None:
+    class_level=" for a " + class_level
+    class_level+=" level class"
+  return f"""You are a class assistant{class_level}.
+    Given a transcript from 
     the professor speech, come up with a relevant question about 
     the content being taught. If there is no relevant question 
     can be asked, say '0' and nothing else."""
