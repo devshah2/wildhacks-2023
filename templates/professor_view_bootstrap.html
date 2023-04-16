@@ -11,10 +11,10 @@
   <div class="container">
     <div class="row">
       <div class="col-md-6">
-        <h1>Title</h1>
+        <h1>TAi</h1>
       </div>
       <div class="col-md-6 text-right">
-        <button class="btn btn-primary">Button</button>
+        <button class="btn btn-primary">Student View</button>
       </div>
     </div>
   </div>
@@ -25,35 +25,35 @@
   <div class="container">
     <div class="row">
       <div class="col-md-3">
+        <label for="dropdown1">Class Level</label>
         <select class="form-control">
-          <option value="">Dropdown 1</option>
-          <option value="option1">Option 1</option>
-          <option value="option2">Option 2</option>
-          <option value="option3">Option 3</option>
+          <option value="undergraduate">Undergraduate</option>
+          <option value="graduate">Graduate</option>
+          <option value="high school">High School</option>
         </select>
       </div>
       <div class="col-md-3">
+        <label for="dropdown2">Generation Speed</label>
         <select class="form-control">
-          <option value="">Dropdown 2</option>
-          <option value="option1">Option 1</option>
-          <option value="option2">Option 2</option>
-          <option value="option3">Option 3</option>
+          <option value="">30 seconds</option>
+          <option value="option1">60 seconds</option>
+          <option value="option2">90 seconds</option>
+          <option value="option3">180 seconds</option>
         </select>
       </div>
       <div class="col-md-3">
+        <label for="dropdown3">Question Creativity</label>
         <select class="form-control">
-          <option value="">Dropdown 3</option>
-          <option value="option1">Option 1</option>
-          <option value="option2">Option 2</option>
-          <option value="option3">Option 3</option>
+          <option value="0">Elaborative</option>
+          <option value="0.5">Exploratory</option>
+          <option value="1">Very Creative</option>
         </select>
       </div>
       <div class="col-md-3">
+        <label for="dropdown4">Sort by</label>
         <select class="form-control">
-          <option value="">Dropdown 4</option>
-          <option value="option1">Option 1</option>
-          <option value="option2">Option 2</option>
-          <option value="option3">Option 3</option>
+          <option value="Upvotes">Upvotes</option>
+          <option value="Recent">Recent</option>
         </select>
       </div>
     </div>
@@ -68,9 +68,12 @@
       <div class="col-md-12">
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">{{ question }}</h5>
-            <p class="card-text">This is a sample card that spans the entire width of the screen horizontally.</p>
-          </div>
+              <h5 class="card-title">{{ question }}</h5>
+              <p class="card-text">Asked by {{ author }}</p>
+              <div class="text-right">
+                <span class="badge badge-primary" style="vertical-align: middle;">3 Upvotes</span>
+              </div>
+            </div>        
         </div>
       </div>
     </div>
@@ -81,4 +84,7 @@
 <!-- Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-<script src
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>
