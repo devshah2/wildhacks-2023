@@ -3,13 +3,13 @@ import uuid
 import json
 import jsonpickle as jsp
 import markupsafe as mks
-import 
+import tai
 
 app = fk.Flask(__name__)
 app.secret_key = "holyshitthisisunsafesomeonegeneratearealsecretkeybutimtoolazysonotme"
 
 def generate_questions(transcript):
-    
+    return list(tai.get_questions(transcript))
 
 @app.route("/", methods=["GET"])
 def index():
@@ -48,6 +48,10 @@ def append_transcript():
     else:
         fk.session['transcript'] = fk.session['transcript'].join(addition)
     return fk.redirect(fk.url_for('session'))
+
+@app.errorhandler(500)
+def errorhandler_500(error):
+    return fk.render_template("500.html"), 500
 
 @app.errorhandler(404)
 def errorhandler_404(error):
