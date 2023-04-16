@@ -127,8 +127,8 @@ def main():
     erase_thread = threading.Thread(target=erase_questions, args=[questions, shutdown, 5])
     erase_thread.start()    
 
-    ans_thread = threading.Thread(target=answer_questions, args=[transcript, shutdown, questions, 0.1, 15])
-    ans_thread.start()
+#    ans_thread = threading.Thread(target=answer_questions, args=[transcript, shutdown, questions, 0.1, 15])
+#    ans_thread.start()
     # 
     app.run(host='0.0.0.0',port=5000)
 

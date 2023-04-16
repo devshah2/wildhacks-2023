@@ -24,7 +24,7 @@ def get_questions(prof_tscpt,class_lvl=None, temperature="0.5"):
       {"role": "user", "content": prof_tscpt}
       ],
     temperature=temperature,
-    top_p=0
+    top_p=1
     )
   question = response.choices[0].message.content
   print(question)
