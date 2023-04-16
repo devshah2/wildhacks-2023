@@ -17,7 +17,7 @@ def update_questions(transcript, shutdown, questions, temperature, class_lvl, up
             questions[uuid]=question.Question(uuid,generated,0,answer)
     print("ending generation thread")
         
-def answer_questions(transcript, shutdown, questions, threshold=0.02, updates=30):
+def answer_questions(transcript, shutdown, questions, threshold=0.1, updates=15):
     print("Starting answer thread!")
     while not shutdown.is_set():
         time.sleep(updates)

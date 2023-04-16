@@ -6,7 +6,7 @@ from question import Question
 import speech_to_text as spt
 import threading
 import markupsafe as mks
-from generate_question import update_questions
+from generate_question import update_questions, answer_questions
 from filter_questions import erase_questions
 
 from transcript_to_stream import send_transcript_thread
@@ -126,6 +126,9 @@ def main():
 
     erase_thread = threading.Thread(target=erase_questions, args=[questions, shutdown, 5])
     erase_thread.start()    
+
+    ans_thread = threading.Thread(target=answer_questions, args=[transcript, shutdown, questions, 0.1, 15])
+    ans_thread.start()
     # 
     app.run(host='0.0.0.0',port=5000)
 
