@@ -38,3 +38,9 @@ class Question:
         answer = self.answer
         self.mut.release()
         return answer
+    
+    def get_votes(self):
+        self.mut.acquire()
+        answer = self.votes
+        self.mut.release()
+        return answer
