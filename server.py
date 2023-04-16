@@ -1,4 +1,5 @@
-import time
+from string import ascii_lowercase
+import random
 import flask as fk
 import flask_sock as fks
 import uuid as pyuuid
@@ -25,7 +26,7 @@ WINDOW_SIZE = 500
 transcript = Transcript(WINDOW_SIZE)
 questions: dict[pyuuid.UUID, Question] = {}
 config = Gptconfig("0.5", "undergraduate", 30)
-prof_access_key = 'abcd'
+prof_access_key = ''.join(random.sample(ascii_lowercase,4))
 
 class SessionInfo:
 
@@ -125,8 +126,18 @@ def student_post_question():
 @sock.route("/transcript")
 def send_transcript(sock):
     while not shutdown.is_set():
+        data = sock.receive()
         sock.send(transcript.get_full())
-        time.sleep(3000)
+@sock.route("/questions")
+def send_questions(sock):
+    while not shutdown.is_set():
+        data = sock.receive()
+        student_questions_card = fk.render_template("student_view_questions.html",
+                                                    transcript=transcript.get_full(),
+                                                    questions=questions,
+                                                    constant_refresh=False,
+                                                    websockets=True)
+        sock.send(student_questions_card)
 
 @app.errorhandler(500)
 def errorhandler_500(error):
@@ -163,6 +174,9 @@ def main():
     ans_thread = threading.Thread(target=answer_questions, args=[transcript, shutdown, questions, 0.1, 15])
     ans_thread.start()
     # 
+    print("")
+    print("Server Starting: Professor Access Key Is: ", prof_access_key)
+    print("")
     app.run(host='0.0.0.0',port=5000)
 
     print("Shutting down...")
