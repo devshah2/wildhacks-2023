@@ -14,11 +14,13 @@ def generate_prompt(transcript):
   Professor: {}
   TAi:""".format(transcript)
 
-def get_questions(prof_tscpt):
-  
-  response = openai.Completion.create(
-    model="text-davinci-003",
-    prompt=generate_prompt(prof_tscpt),
-    temperature=0.5,
-    )
-  return [choice.text for choice in response.choices]
+def get_questions(prof_tscpt: str) -> list[str]:
+  try:  
+      response = openai.Completion.create(
+        model="text-davinci-003",
+        prompt=generate_prompt(prof_tscpt),
+        temperature=0.5,
+        )
+      return [choice.text for choice in response.choices]
+  except:
+      return ["Why didn't the call to OpenAI's API Work?"]
