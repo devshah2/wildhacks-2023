@@ -3,12 +3,13 @@ import uuid
 import json
 import jsonpickle as jsp
 import markupsafe as mks
+import 
 
 app = fk.Flask(__name__)
 app.secret_key = "holyshitthisisunsafesomeonegeneratearealsecretkeybutimtoolazysonotme"
 
 def generate_questions(transcript):
-    return list(["How does that work?"])
+    
 
 @app.route("/", methods=["GET"])
 def index():
