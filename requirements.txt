@@ -2,3 +2,4 @@ torch
 transformers
 openai
 flask
+sentence-transformers
