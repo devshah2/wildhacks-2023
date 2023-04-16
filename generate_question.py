@@ -8,5 +8,5 @@ def update_questions(transcript, questions, temperature, class_lvl):
     if(generated!=""):
         answer = cite_transcript_model.cite_transcript(transcript.get_full(),generated)
         print(answer)
-        questions.append(question(generated,0,answer))
+        questions.append(question.Question(generated,0,answer))
     
