@@ -6,6 +6,7 @@ from question import Question
 import speech_to_text as spt
 import threading
 import markupsafe as mks
+from generate_question import update_questions
 
 from transcript_to_stream import send_transcript_thread
 
@@ -30,9 +31,6 @@ class SessionInfo:
         self.is_prof = True
 
 sinfo: dict[pyuuid.UUID, SessionInfo] = {}
-
-def generate_questions(transcript):
-    return list(tai.get_questions(transcript))
 
 @app.route("/", methods=["GET"])
 def index():
@@ -122,6 +120,8 @@ def main():
         st_thread = threading.Thread(target=send_transcript_thread, args=[transcript, shutdown])
         st_thread.start()
 
+    gen_thread = threading.Thread(target=update_questions, args=[transcript, shutdown, questions, 0.5, "undergrad", 10])
+    gen_thread.start()
     # 
     app.run(host='0.0.0.0',port=5000)
 
@@ -140,4 +140,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
