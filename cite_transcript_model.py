@@ -27,4 +27,5 @@ def cite_transcript(context,question):
        return
     ss=max([0]+[x for x in starts if x<=start])
     ee=min([len(context)]+[x for x in starts if x>=end])
-    return context[ss:ee]
+    return ans
+    #return context[ss:ee]

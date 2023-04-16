@@ -113,7 +113,7 @@ def main():
     shutdown.clear()
 
     # Start threads here
-    speech_to_text_enabled = False
+    speech_to_text_enabled = True
     if speech_to_text_enabled:
         spt_thread = threading.Thread(target=spt.speech_recog_thread, args=[transcript, shutdown])
         spt_thread.start()
