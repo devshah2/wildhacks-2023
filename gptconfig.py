@@ -1,6 +1,6 @@
 import threading
 
-class GPTconfig():
+class Gptconfig():
 
     def __init__(self, temperature, class_lvl, generation_speed):
         self.temperature = temperature
@@ -38,6 +38,6 @@ class GPTconfig():
     
     def set_generation_speed(self, generation_speed):
         self.mut.acquire()
-        self.generation_speed = generation_speed
+        self.generation_speed = int(generation_speed)
         self.mut.release()
     

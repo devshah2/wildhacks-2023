@@ -6,3 +6,4 @@ flask-sock
 sentence-transformers
 SpeechRecognition
 PyAudio
+flask_sock
