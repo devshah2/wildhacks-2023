@@ -12,7 +12,7 @@ import markupsafe as mks
 from generate_question import update_questions
 from answer_questions_updater import answer_questions
 from filter_questions import erase_questions
-
+from gptconfig import Gptconfig
 from transcript_to_stream import send_transcript_thread
 
 app = fk.Flask(__name__)
@@ -25,6 +25,7 @@ sock = fks.Sock(app)
 WINDOW_SIZE = 4096
 transcript = Transcript(WINDOW_SIZE)
 questions: dict[pyuuid.UUID, Question] = {}
+config = Gptconfig("0.5", "undergraduate", 30)
 prof_access_key = ''.join(random.sample(ascii_lowercase,4))
 
 class SessionInfo:
@@ -80,15 +81,34 @@ def upvote(question_uuid):
 
     return fk.redirect(fk.url_for("student"))
 
-@app.route("/professor")
+@app.route("/professor", methods=["GET"])
 def professor():
     if not sinfo[fk.session['uuid']].is_prof:
         fk.abort(403)
+    all_questions = list(questions.values())
+    all_questions.sort(key=lambda q: q.get_votes(), reverse=True)
     return fk.render_template("professor_view_bootstrap.html",
                               transcript=transcript.get_full(),
-                              questions=questions,
+                              questions=all_questions,
                               constant_refresh=True,
-                              websockets=False)
+                              websockets=False,
+                              class_lvl=config.get_class_lvl(),
+                              creativity=config.get_temperature(),
+                              generation=config.get_generation_speed(),
+                              sort="Upvotes")
+
+@app.route("/professor", methods=["POST"])
+def professor_post_update():
+    data = fk.request.get_json()
+    # Access the selected values from the dropdowns in the data object
+    config.set_class_lvl(data.get('class')) 
+    config.set_temperature(data.get('creativity')) 
+    config.set_generation_speed(data.get('generation'))
+    sorting_option = data.get('sort')
+    print(data.get('generation'))
+    print(data)
+    print(config.get_class_lvl())
+    return fk.redirect(fk.url_for("professor"))
 
 @app.route("/student", methods=["GET"])
 def student():
@@ -139,7 +159,7 @@ def main():
     shutdown.clear()
 
     # Start threads here
-    speech_to_text_enabled = True
+    speech_to_text_enabled = False
     if speech_to_text_enabled:
         spt_thread = threading.Thread(target=spt.speech_recog_thread, args=[transcript, shutdown])
         spt_thread.start()
@@ -147,7 +167,7 @@ def main():
         st_thread = threading.Thread(target=send_transcript_thread, args=[transcript, shutdown])
         st_thread.start()
 
-    gen_thread = threading.Thread(target=update_questions, args=[transcript, shutdown, questions, 0.5, "undergrad", 30])
+    gen_thread = threading.Thread(target=update_questions, args=[transcript, shutdown, questions, config])
     gen_thread.start()
 
     erase_thread = threading.Thread(target=erase_questions, args=[questions, shutdown, 5])
