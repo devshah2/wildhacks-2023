@@ -1,7 +1,8 @@
 import os
 import openai
 
-openai.api_key = os.getenv("OPENAI_API_KEY")
+openai.organization = "org-AanZ8UEwwQn4x89YMCu6n9dr"
+openai.api_key = "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"
 
 def generate_personality(class_level=None):
   if class_level != None:
@@ -15,6 +16,8 @@ def generate_personality(class_level=None):
 
 def get_questions(prof_tscpt,class_lvl=None, temperature="0.5"):
   temperature=float(temperature)
+  print(temperature)
+  print(class_lvl)
   response = openai.ChatCompletion.create(
     model="gpt-3.5-turbo",
     messages = [
@@ -25,6 +28,7 @@ def get_questions(prof_tscpt,class_lvl=None, temperature="0.5"):
     top_p=0
     )
   question = response.choices[0].message.content
+  print(question)
   if question[0] == "0":
     return ""
   else:

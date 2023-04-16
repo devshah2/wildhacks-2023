@@ -21,8 +21,10 @@ def cite_transcript(context,question):
     start=out["start"]
     end=out["end"]
     ans=out["answer"]
-    #if(score<=0.1):
-    #    return
+    print(question)
+    print(out)
+    if(score<=0.1):
+       return
     ss=max([0]+[x for x in starts if x<=start])
     ee=min([len(context)]+[x for x in starts if x>=end])
-    return ans
+    return context[ss:ee]
