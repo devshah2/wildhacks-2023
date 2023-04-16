@@ -3,3 +3,5 @@ transformers
 openai
 flask
 sentence-transformers
+SpeechRecognition
+PyAudio
