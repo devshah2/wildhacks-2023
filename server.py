@@ -25,6 +25,7 @@ def index():
 
 @app.route("/access_key", methods=["POST"])
 def access_key():
+    print("Access key called")
     access_key = str(fk.request.form['access_key'])
     if access_key == prof_access_key:
         fk.session['prof'] = True
