@@ -34,6 +34,8 @@ pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
+Additionally, set the environment variable "OPENAI_API_KEY" to your OpenAI API Key which can be generated [Here](https://platform.openai.com/account/api-keys).
+
 Run the app:
 ```shell
 python3 server.py
