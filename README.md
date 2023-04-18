@@ -14,7 +14,7 @@ python server.py --voice
 
 Runs the server using an arbitrary text file for the transcript
 ```shell
-python server.py --file_transcript [FILENAME]
+python server.py --transcript_file [FILENAME]
 ```
 
 You can also add the flag `--key [KEY]` to change the default generated Professor access key
